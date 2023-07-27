@@ -28,9 +28,9 @@ class TestRoutes(TestCase):
             'users:signup',
         )
         for url in urls:
-            url = reverse(url)
-            response = self.client.get(url)
-            self.assertEqual(response.status_code, HTTPStatus.OK)
+            with self.subTest("Страница не доступна", url=url):
+                response = self.client.get(reverse(url))
+                self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_redirect_for_anonymous_client(self):
         """Редирект со страниц если пользователь анонимный."""
@@ -46,7 +46,7 @@ class TestRoutes(TestCase):
 
         )
         for name, args in urls:
-            with self.subTest(name=name):
+            with self.subTest("Страница не доступна", name=name):
                 url = reverse(name, args=args)
                 redirect_url = f'{login_url}?next={url}'
                 response = self.client.get(url)
@@ -62,8 +62,9 @@ class TestRoutes(TestCase):
             self.client.force_login(user)
             for name in ('notes:detail', 'notes:edit', 'notes:delete'):
                 with self.subTest(user=user, name=name):
-                    url = reverse(name, args=(self.note.slug,))
-                    response = self.client.get(url)
+                    response = self.client.get(
+                        reverse(name, args=(self.note.slug,))
+                    )
                     self.assertEqual(response.status_code, status)
 
     def test_pages_availability_for_an_authenticated_user(self):

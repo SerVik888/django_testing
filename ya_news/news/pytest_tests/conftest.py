@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 
 import pytest
 from django.conf import settings
+from django.urls import reverse
 from django.utils import timezone
 
 from news.models import Comment, News
@@ -52,6 +53,11 @@ def all_news():
 
 
 @pytest.fixture
+def detail_url(news):
+    return reverse('news:detail', args=(news.pk,))
+
+
+@pytest.fixture
 def comment(author, news):
     comment = Comment.objects.create(
         text='Текст заметки',
@@ -73,8 +79,19 @@ def comments(author, news):
 
 
 @pytest.fixture
-def comment_data(news):
+def comment_data(news, author):
     return {
         'text': 'Обновлённый комментарий',
-        'news': news
+        'news': news,
+        'author': author
     }
+
+
+@pytest.fixture
+def delete_comment_url(comment):
+    return reverse('news:delete', args=(comment.pk,))
+
+
+@pytest.fixture
+def edit_comment_url(comment):
+    return reverse('news:edit', args=(comment.pk,))

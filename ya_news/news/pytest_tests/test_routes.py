@@ -4,6 +4,8 @@ import pytest
 from django.urls import reverse
 from pytest_django.asserts import assertRedirects
 
+LOGIN_URL = reverse("users:login")
+
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
@@ -19,9 +21,9 @@ def test_availability_for_anonymous_user(client, name):
 
 
 @pytest.mark.django_db
-def test_detail_availability_for_anonymous_user(client, news):
+def test_detail_availability_for_anonymous_user(client, detail_url):
     """Анонимный пользователь может попасть на страницу отдельной новости"""
-    response = client.get(reverse('news:detail', args=(news.pk,)))
+    response = client.get(detail_url)
     assert response.status_code == HTTPStatus.OK
 
 
@@ -47,7 +49,7 @@ def test_availability_pages_edit_delete_for_anonymous_user(
     комментариев он должен перенаправляться на страницу авторизации
     """
     url = reverse(name, args=(comment.pk,))
-    expected_url = f'{reverse("users:login")}?next={url}'
+    expected_url = f'{LOGIN_URL}?next={url}'
     response = client.get(url)
     assertRedirects(response, expected_url)
 
