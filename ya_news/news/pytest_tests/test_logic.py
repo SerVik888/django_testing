@@ -1,4 +1,5 @@
 from http import HTTPStatus
+import random
 
 import pytest
 from pytest_django.asserts import assertFormError, assertRedirects
@@ -27,7 +28,8 @@ def test_user_cant_use_bad_words(auth_client, news, detail_url):
       а форма вернёт ошибку.
       """
     start_comment_count = Comment.objects.count()
-    bad_words_data = {'text': f'Какой-то текст, {BAD_WORDS[0]}, еще текст'}
+    random_word = random.choice(BAD_WORDS)
+    bad_words_data = {'text': f'Какой-то текст, {random_word}, еще текст'}
     response = auth_client.post(detail_url, data=bad_words_data)
     assertFormError(
         response,
