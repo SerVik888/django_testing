@@ -58,6 +58,11 @@ def detail_url(news):
 
 
 @pytest.fixture
+def pk_for_args(news):
+    return news.pk,
+
+
+@pytest.fixture
 def comment(author, news):
     comment = Comment.objects.create(
         text='Текст заметки',

@@ -56,11 +56,7 @@ class TestLogic(TestCase):
             self.add_post(self.second_note), NOTES_SUCCESS
         )
         self.assertEqual(Note.objects.count(), self.start_notes_count + 1)
-        new_note = Note.objects.last()
-        self.assertEqual(new_note.title, self.second_note['title'])
-        self.assertEqual(new_note.text, self.second_note['text'])
-        self.assertEqual(new_note.slug, self.second_note['slug'])
-        self.assertEqual(new_note.author, self.author)
+        self.assert_note(self.second_note)
 
     def test_anonymous_user_cant_create_note(self):
         """Aнонимный пользователь не может создать заметку."""

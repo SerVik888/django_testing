@@ -9,32 +9,41 @@ LOGIN_URL = reverse("users:login")
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    'name',
-    ('news:home', 'users:login', 'users:logout', 'users:signup')
+    'name, args',
+    (
+        ('news:detail', pytest.lazy_fixture('pk_for_args')),
+        ('news:home', None),
+        ('users:login', None),
+        ('users:logout', None),
+        ('users:signup', None),
+
+    )
 )
-def test_availability_for_anonymous_user(client, name):
+def test_availability_for_anonymous_user(client, name, args):
     """Анонимный пользователь может попасть на главную страинцу, страницы
     регистрации, входа в учётную запись и выхода из неё
     """
-    response = client.get(reverse(name))
+    response = client.get(reverse(name, args=args))
     assert response.status_code == HTTPStatus.OK
 
 
 @pytest.mark.django_db
-def test_detail_availability_for_anonymous_user(client, detail_url):
-    """Анонимный пользователь может попасть на страницу отдельной новости"""
-    response = client.get(detail_url)
-    assert response.status_code == HTTPStatus.OK
-
-
 @pytest.mark.parametrize(
-    'name',
-    ('news:edit', 'news:delete')
+    'parametrized_client, expected_status',
+    (
+        (pytest.lazy_fixture('auth_client'), HTTPStatus.OK),
+        (pytest.lazy_fixture('another_author'), HTTPStatus.NOT_FOUND)
+    ),
 )
-def test_pages_availability_for_author(auth_client, comment, name):
-    """Автору комментария доступно его изменение и удаление комментария"""
-    response = auth_client.get(reverse(name, args=(comment.pk,)))
-    assert response.status_code == HTTPStatus.OK
+@pytest.mark.parametrize('name', ('news:edit', 'news:delete'))
+def test_availability_pages_edit_delete_for_author_and_reader(
+    parametrized_client, expected_status, comment, name
+):
+    """Зарегестрированный пользователь может редактировать или удалять
+    свои комментарии, но не может чужие.
+    """
+    response = parametrized_client.get(reverse(name, args=(comment.pk,)))
+    assert response.status_code == expected_status
 
 
 @pytest.mark.django_db
@@ -52,17 +61,3 @@ def test_availability_pages_edit_delete_for_anonymous_user(
     expected_url = f'{LOGIN_URL}?next={url}'
     response = client.get(url)
     assertRedirects(response, expected_url)
-
-
-@pytest.mark.parametrize(
-    'name',
-    ('news:edit', 'news:delete')
-)
-def test_availability_pages_edit_delete_for_another_user(
-    admin_client, comment, name
-):
-    """Зарегестрированный пользователю не может редактировать или удалять чужие
-    комментарии.
-    """
-    response = admin_client.get(reverse(name, args=(comment.pk,)))
-    assert response.status_code == HTTPStatus.NOT_FOUND

@@ -8,8 +8,6 @@ from notes.models import Note, User
 
 class TestContent(TestCase):
 
-    NOTES_LIST = reverse('notes:list')
-
     @classmethod
     def setUpTestData(cls):
         cls.author = User.objects.create(username='Я')
