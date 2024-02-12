@@ -17,8 +17,7 @@ ya_news - сервис для просмотра новостей
     `source env/bin/activate` -> активировать виртуальное окружение\
     `python3 -m pip install --upgrade pip` -> обновить установщик\
     `pip install -r requirements.txt` -> установить зависимости из файла requirements.txt\
-    python manage.py loaddata db.json 
-    `cd ya_news` или `cd ya_note` -> переходим в папку 
+    `cd ya_news` или `cd ya_note` -> переходим в папку\
     `python3 manage.py migrate` -> выполнить миграции\
     `python3 manage.py loaddata news/fixtures/news.json` загрузка данных из файла в БД(только для проекта ya_news)\
     `python3 manage.py createsuperuser` -> создать суперпользователя\
@@ -39,7 +38,7 @@ ya_news - сервис для просмотра новостей
 
 ### Как тестировать проекты:
 `source venv/Scripts/activate` -> активировать виртуальное окружение\
-`cd ya_news` или `cd ya_note` -> переходим в папку 
+`cd ya_news` или `cd ya_note` -> переходим в папку\
 `pytest` -> Выполнить команду из этой папки(смотря для какого приложения нужно выполнить тесты).
 
 ### Как тестировать тесты:
