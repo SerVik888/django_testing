@@ -1,52 +1,55 @@
-# Django testing  
-## Если вы успели выполнить все домашние задания — ваш финальный проект готов.
-Перенесите тесты из ваших проектов в данный репозиторий (**django_testing**), который появился в вашем аккаунте.  
-В итоге должна получиться следующая структура репозитория:
-```
-Dev
- └── django_testing
-     ├── ya_news
-     │   ├── news
-     │   │   ├── fixtures/
-     │   │   ├── migrations/
-     │   │   ├── pytest_tests/   <- Директория с вашими тестами pytest для проекта ya_news
-     │   │   ├── __init__.py
-     │   │   ├── admin.py
-     │   │   ├── apps.py
-     │   │   ├── forms.py
-     │   │   ├── models.py
-     │   │   ├── urls.py
-     │   │   └── views.py
-     │   ├── templates/
-     │   ├── yanews/
-     │   ├── manage.py
-     │   └── pytest.ini
-     ├── ya_note
-     │   ├── notes
-     │   │   ├── migrations/
-     │   │   ├── tests/          <- Директория с вашими тестами unittest для проекта ya_note
-     │   │   ├── __init__.py
-     │   │   ├── admin.py
-     │   │   ├── apps.py
-     │   │   ├── forms.py
-     │   │   ├── models.py
-     │   │   ├── urls.py
-     │   │   └── views.py
-     │   ├── templates/
-     │   ├── yanote/
-     │   ├── manage.py
-     │   └── pytest.ini
-     ├── .gitignore
-     ├── README.md
-     ├── requirements.txt
-     └── structure_test.py
-```
+# Проект Django testing
 
-## После копирования тестов, написанных в ходе прохождения спринта, для проверки готовности проекта к сдаче необходимо выполнить 4 действия:
-1. Создать и активировать виртуальное окружение; установить зависимости из файла `requirements.txt`;
-2. Запустить скрипт для `run_tests.sh` из корневой директории проекта:
-```sh
-bash run_tests.sh
-```
+### Краткое описание проекта:
+В этом проекте написаны тесты для двух приложений ya_news(pytest) и ya_note(unittest)\
+ya_note - сервис для создания заметок\
+ya_news - сервис для просмотра новостей
+- Тестирование маршрутов
+- Тестирование контента
+- Тестирование логики приложения
 
-**Если все проверки успешно выполнились, проект можно отправлять на ревью.**
+
+### Как запустить проекты:
+`git clone git@github.com:SerVik888/django_testing.git` -> клонировать репозиторий
+
+* Если у вас Linux/macOS\
+    `python3 -m venv env` -> создать виртуальное окружение\
+    `source env/bin/activate` -> активировать виртуальное окружение\
+    `python3 -m pip install --upgrade pip` -> обновить установщик\
+    `pip install -r requirements.txt` -> установить зависимости из файла requirements.txt\
+    python manage.py loaddata db.json 
+    `cd ya_news` или `cd ya_note` -> переходим в папку 
+    `python3 manage.py migrate` -> выполнить миграции\
+    `python3 manage.py loaddata news/fixtures/news.json` загрузка данных из файла в БД(только для проекта ya_news)\
+    `python3 manage.py createsuperuser` -> создать суперпользователя\
+    `python3 manage.py runserver` -> запустить проект
+
+* Если у вас windows\
+    `python -m venv venv` -> создать виртуальное окружение\
+    `source venv/Scripts/activate` -> активировать виртуальное окружение\
+    `python -m pip install --upgrade pip` -> обновить установщик\
+    `pip install -r requirements.txt` -> установить зависимости из файла requirements.txt\
+    `cd ya_news` или `cd ya_note` -> переходим в папку 
+    `python manage.py migrate` -> выполнить миграции\
+    `python manage.py loaddata news/fixtures/news.json` загрузка данных из файла в БД(только для проекта ya_news)\
+    `python manage.py createsuperuser` -> создать суперпользователя\
+    `python manage.py runserver` -> запустить проект
+* После запуска, проект будет доступен по адресу http://127.0.0.1:8000/
+* Панель администратора находиться по адресу http://127.0.0.1:8000/admin/
+
+### Как тестировать проекты:
+`source venv/Scripts/activate` -> активировать виртуальное окружение\
+`cd ya_news` или `cd ya_note` -> переходим в папку 
+`pytest` -> Выполнить команду из этой папки(смотря для какого приложения нужно выполнить тесты).
+
+### Как тестировать тесты:
+`source venv/Scripts/activate` -> активировать виртуальное окружение\
+`run_tests.sh` -> Выполнить команду из корня проекта
+
+### Cписок используемых технологий:
+- Django
+- pytest
+- unittest
+
+Автор: Сафонов Сергей\
+Почта: [sergey_safonov86@inbox.ru](mailto:sergey_safonov86@inbox.ru)
