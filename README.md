@@ -19,7 +19,7 @@ ya_news - сервис для просмотра новостей
     `pip install -r requirements.txt` -> установить зависимости из файла requirements.txt\
     `cd ya_news` или `cd ya_note` -> переходим в папку\
     `python3 manage.py migrate` -> выполнить миграции\
-    `python3 manage.py loaddata news/fixtures/news.json` загрузка данных из файла в БД(только для проекта ya_news)\
+    `python3 manage.py loaddata news/fixtures/news.json` -> загрузка данных из файла в БД(только для проекта ya_news)\
     `python3 manage.py createsuperuser` -> создать суперпользователя\
     `python3 manage.py runserver` -> запустить проект
 
@@ -28,9 +28,9 @@ ya_news - сервис для просмотра новостей
     `source venv/Scripts/activate` -> активировать виртуальное окружение\
     `python -m pip install --upgrade pip` -> обновить установщик\
     `pip install -r requirements.txt` -> установить зависимости из файла requirements.txt\
-    `cd ya_news` или `cd ya_note` -> переходим в папку 
+    `cd ya_news` или `cd ya_note` -> переходим в папку\
     `python manage.py migrate` -> выполнить миграции\
-    `python manage.py loaddata news/fixtures/news.json` загрузка данных из файла в БД(только для проекта ya_news)\
+    `python manage.py loaddata news/fixtures/news.json` -> загрузка данных из файла в БД(только для проекта ya_news)\
     `python manage.py createsuperuser` -> создать суперпользователя\
     `python manage.py runserver` -> запустить проект
 * После запуска, проект будет доступен по адресу http://127.0.0.1:8000/
